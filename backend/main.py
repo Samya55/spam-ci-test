@@ -15,13 +15,13 @@ app = FastAPI(title="Spam Detection System")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust this in production
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Global variables for models
+
 VECTORIZER = None
 MODEL = None
 MODEL_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -54,18 +54,16 @@ def predict_spam(request: schemas.PredictionCreate, db: Session = Depends(get_db
     if not text.strip():
         raise HTTPException(status_code=400, detail="Text cannot be empty.")
 
-    # Vectorize and predict
-    text_vec = VECTORIZER.transform([text])
-    pred_val = MODEL.predict(text_vec)[0]  # 0 or 1 usually, but our dataset has 'ham'/'spam' as labels
     
-    # Check probabilities for confidence score
+    text_vec = VECTORIZER.transform([text])
+    pred_val = MODEL.predict(text_vec)[0]
     probs = MODEL.predict_proba(text_vec)[0]
     confidence = max(probs)
     
-    # Determine the result label
+    
     result_label = "Spam" if pred_val == "spam" else "Ham"
 
-    # Save to database
+    
     db_prediction = models.Prediction(
         text=text,
         prediction=result_label,

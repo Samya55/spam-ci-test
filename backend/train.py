@@ -26,10 +26,10 @@ def download_and_extract_data():
 def train_model():
     print("Loading data...")
     import csv
-    # The dataset is tab-separated: label \t text
+    
     df = pd.read_csv(DATA_FILE, sep='\t', header=None, names=['label', 'text'], quoting=csv.QUOTE_NONE)
     
-    # Preprocessing: map labels to binary (Spam=1, Ham=0) or just keep text
+    
     X = df['text']
     y = df['label']
 
@@ -52,7 +52,7 @@ def train_model():
     print("Classification Report:")
     print(classification_report(y_test, y_pred))
 
-    # Save the models
+    
     vectorizer_path = os.path.join(MODEL_DIR, "vectorizer.pkl")
     model_path = os.path.join(MODEL_DIR, "model.pkl")
     joblib.dump(vectorizer, vectorizer_path)
