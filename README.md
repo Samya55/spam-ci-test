@@ -55,4 +55,4 @@ A complete machine learning-powered Spam Detection System built from scratch. It
 ## API Endpoints
 - `POST /predict`: Submit `{"text": "your message"}` to receive a Spam/Ham prediction and confidence score.
 - `GET /history`: Retrieve a list of all historical predictions stored in the database.
-
+Testing GitHub Actions
